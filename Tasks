@@ -1,0 +1,169 @@
+def even_in_range(start: int, end: int):
+    for num in range(start, end + 1):
+        if num % 2 == 0:
+            yield num
+print("Task #1")
+for n in even_in_range(3, 12):
+    print(n)
+
+
+class SkipIterator:
+    def __init__(self, data, step):
+        self.data = data
+        self.step = step
+        self.index = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.index >= len(self.data):
+            raise StopIteration
+        value = self.data[self.index]
+        self.index += self.step
+        return value
+
+
+it = SkipIterator([10, 20, 30, 40, 50], step=2)
+print("\nTask#2")
+
+
+for x in it:
+    print(x)
+
+def substrings(s: str, k: int):
+    if k > len(s):
+        return  
+    for i in range(len(s) - k + 1):
+        yield s[i:i+k]
+     
+print("\nTask#3")   
+for sub in substrings("abcdef", 3):
+    print(sub)
+
+        
+        
+def aggregate_pairs(pairs: list[tuple[str, int]]) -> dict[str, int]:
+    result = {}
+    for product, quantity in pairs:
+        if product in result:
+            result[product] += quantity
+        else:
+            result[product] = quantity
+    return result
+
+
+pairs = [("apple", 3), ("banana", 5), ("apple", 2), ("orange", 4)]
+print("\nTask#4")
+print(aggregate_pairs(pairs))
+
+
+def flatten(data):
+    for item in data:
+        if isinstance(item, list):
+            yield from flatten(item)
+        else:
+            yield item
+
+data = [1, [2, 3], [4, [5, 6]], 7]
+print("\nTask#5")
+for x in flatten(data):
+    print(x)
+
+
+def dict_to_tuples(d: dict) -> list[tuple]:
+    return [(key, value) for key, value in d.items()]
+    
+def tuples_to_dict(pairs: list[tuple]) -> dict:
+    result = {}
+    for key, value in pairs:
+        result[key] = value
+    return result
+
+print("\nTask#6")
+d = {"a": 1, "b": 2, "c": 3}
+
+pairs = dict_to_tuples(d)
+print(pairs)
+
+new_d = tuples_to_dict([("a", 10), ("b", 20), ("a", 99)])
+print(new_d)
+
+
+def filter_dict(d: dict[str, int], threshold: int) -> dict[str, int]:
+    return {key: value for key, value in d.items() if value > threshold}
+
+
+products = {
+    "apple": 25,
+    "banana": 40,
+    "orange": 30,
+    "kiwi": 55,
+}
+print("\nTask#7")
+print(filter_dict(products, 30))
+
+def name_score_pairs(names: list[str], scores: dict[str, int]):
+    for name in names:
+        yield name, scores.get(name, None)
+
+
+names = ["Іван", "Ольга", "Богдан"]
+scores = {"Іван": 90, "Ольга": 85, "Богдан": 78}
+
+print("\nTask#8")
+for pair in name_score_pairs(names, scores):
+    print(pair)
+
+
+class KeyFilterIterator:
+    def __init__(self, d: dict, allowed_keys):
+        self.d = d
+        self.allowed = set(allowed_keys)  
+        self.keys = iter(d.items())
+       
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        while True:
+            key, value = next(self.keys)
+            if key in self.allowed:
+                return key, value
+
+d = {"a": 1, "b": 2, "c": 3}
+allowed = {"b", "c", "x"}
+
+print("\nTask#9")
+it = KeyFilterIterator(d, allowed)
+
+for pair in it:
+    print(pair)
+
+
+
+def running_stats(numbers: list[float]):
+    count = 0
+    current_sum = 0.0
+
+    for x in numbers:
+        count += 1
+        current_sum += x
+        average = current_sum / count
+        yield count, current_sum, average
+
+nums = [10, 20, 30]
+
+print("\nTask#10")
+for stats in running_stats(nums):
+    print(stats)
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
